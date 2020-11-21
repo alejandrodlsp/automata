@@ -21,9 +21,6 @@
     <ClInclude Include="src\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\dep\Cell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Cell.h">
       <Filter>Header Files</Filter>
     </ClInclude>

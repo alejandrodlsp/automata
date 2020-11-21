@@ -27,25 +27,16 @@ public:
 		QuadInitialize();
 	}
 
-	void Render(int texture_unit)
+	void Render(int texture_unit = GL_TEXTURE0)
 	{
-		float pixels[] = {
-			0.0f, 0.5f, 0.0f,   1.0f, 1.0f, 1.0f,
-			1.0f, 1.0f, 1.0f,   0.0f, 0.5f, 0.0f
-		};
-
-		glBindTexture(GL_TEXTURE_2D, CellTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_FLOAT, pixels);
-		glBindTexture(GL_TEXTURE_2D, CellTexture);
-
 		glBindVertexArray(quadVAO);
 		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quadEBO);
-		//glActiveTexture(texture_unit);
+		glActiveTexture(texture_unit);
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-1.0f, -1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		mShader.Bind();
 		mShader.SetUniformMat4("uModel", model);
 		mShader.SetUniformI("uTexture", 0);
@@ -54,17 +45,11 @@ public:
 	}
 
 private:
-	unsigned int CellTexture;
 	unsigned int quadVBO, quadEBO, quadVAO;
 	Shader mShader;
 
 	void QuadInitialize()
 	{
-		glGenTextures(1, &CellTexture);
-		glBindTexture(GL_TEXTURE_2D, CellTexture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
 		glGenVertexArrays(1, &quadVAO);
 		glGenBuffers(1, &quadVBO);
 		glGenBuffers(1, &quadEBO);
